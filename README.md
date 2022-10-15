@@ -1,9 +1,9 @@
 # Documentation
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/groot-mg/docs/blob/main/LICENSE)
 
-This repo is used to keep diagrams, designs and high level documentation about the project.
+This repo is used to keep diagrams, designs and high level documentation about [goot-mg](https://github.com/groot-mg) project.
 
-Each service has some endpoints definitions and are available on the services repos, please see each one if you want to see some more in deep detail.
+Each downstream has some endpoints definitions and are available on their repos, please see each one if you want to see some more in deep detail.
 
 ## Draw.io
 [draw.io](http://draw.io/) is used for the designs.
@@ -15,8 +15,6 @@ Files are available under the folder [/draw.io](./draw.io/).
 [PlantText](https://www.planttext.com/) is used for the sequence diagrams.
 
 Files are available under the folder [/plant-text](https://www.planttext.com/).
-
-<br/>
 
 # Application architecture/design
 
