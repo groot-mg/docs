@@ -1,0 +1,28 @@
+@startuml
+
+title "Oauth2 Integration Spring - Keycloak - Sequence Diagram"
+
+actor User
+
+User -> gateway : GET /service
+gateway -> gateway: create session
+User <-- gateway : 302 redirect to /oauth2/authorization/keycloak and set-cookie
+
+User -> gateway : GET /oauth2/authorization/keycloak
+User <-- gateway : 302 redirect to Keycloak login page /realms/shopping-api/protocol/openid-connect/auth
+
+User -> keycloak : GET keycloak login page /realms/shopping-api/protocol/openid-connect/auth
+User <-- keycloak : response
+
+User -> keycloak : POST login /realms/shopping-api/login-actions/authenticate
+User <-- keycloak : 302 redirect to gateway /login/oauth2/code/keycloak
+
+User -> gateway : GET /login/oauth2/code/keycloak 
+User <-- gateway : 302 redirect to initial /service
+
+User -> gateway : GET /service
+gateway -> service : GET /service
+gateway <-- service : response
+User <-- gateway : response
+
+@enduml
