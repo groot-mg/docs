@@ -1,9 +1,14 @@
 # Documentation
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/groot-mg/docs/blob/main/LICENSE)
 
-This repo is used to keep diagrams, designs and high level documentation about [goot-mg](https://github.com/groot-mg) project.
 
-Each downstream has some endpoints definitions and are available on their repos, please see each one if you want to see some more in deep detail.
+<p align="center">
+    <a href="https://github.com/groot-mg">
+        <img height=200 src="./images/groot-image.jpeg">
+    </a>
+    <br>This repo is used to keep diagrams, designs and high level documentation about the project. 
+</p>
+
+---
 
 ## Draw.io
 [draw.io](http://draw.io/) is used for the designs.
@@ -51,3 +56,7 @@ For Authentication and Authorization, an Spring OAuth2 is used with Keycloak. Th
 4. Request the Gateway again, and now logged in, access successfully the resource
 
 <img src="./images/authentication.png" />
+
+---
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/groot-mg/docs/blob/main/LICENSE)
