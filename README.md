@@ -1,11 +1,10 @@
 # Documentation
 
-
-<p align="center">
+<p align="center"
     <a href="https://github.com/groot-mg">
         <img height=200 src="./images/groot-image.jpeg">
     </a>
-    <br>This repo is used to keep diagrams, designs and high level documentation about the project. 
+    <br>This repo is used to keep diagrams, designs and documentation about the project. 
 </p>
 
 ---
@@ -43,7 +42,21 @@ And below the Design how all the frameworks and tools integrate each other:
 
 <img src="./images/groot-mg.drawio.png" />
 
-## Login
+# Respositories 
+
+What each repository does:
+
+* `docs (this)`: contains documentation
+* `docker-local-setup`: contains docker config to run all the services together on a local environment
+* `insomnia-requests`: contains a backup for the insomnia requests
+* `observability-tools`: contains config for prometheus, alert-amanger, grafana, tempo and fluent-bit.
+* `local-database-config`: contains centralised config for database
+* `service-discovery`: service discovery app (Netflix eureka)
+* `gateway`: gateway app, the application entrypoint. 
+* `identity-service`: contains keycloak config
+
+# Login
+## Login with Keycloak
 
 For Authentication and Authorization, an Spring OAuth2 is used with Keycloak. The sequence diagram below shows what happen when an unauthenticated user tries to access a specific resource.
 
