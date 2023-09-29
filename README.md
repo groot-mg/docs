@@ -59,10 +59,32 @@ What each repository does:
     * Repository: [service-discovery](https://github.com/groot-mg/service-discovery)
 * `gateway`: gateway app, the application entrypoint. 
     * Repository: [gateway](https://github.com/groot-mg/gateway)
-* `identity-service`: contains keycloak config
+* `identity-service`: contains keycloak config (and an application that is not used in the project, but can be used to login and create new users)
+    * Repository: [identity-service](https://github.com/groot-mg/identity-service)
+    * Wiki: [here](https://github.com/groot-mg/identity-service/wiki)
 * `sales-catalog-service`: manages products and stock
 * `basket-service`: manages the client basket
 * `notification-service`: kafka consumer for notifications, but this has no implementation
+
+# Features
+
+## Identity
+
+Technical detail on how the keycloak works with Spring for Oauth2.
+
+### Login with Keycloak
+
+For Authentication and Authorization, an Spring OAuth2 is used with Keycloak. The sequence diagram below shows what happen when an unauthenticated user tries to access a specific resource.
+
+1. First the user sends a request to the gateway
+1.2. Gateway checks a session does not exists and returns a 302 to /oauth2/authorization/keycloak
+2. Again the gateway returns a 302 but now redirects the request to keycloak login
+3. Users login successfully and Keycloak redirects the request to the gateway
+3.1 Gateway saves the session and user session details on keycloak, including the JWT Access Token (this token is used by the gateway to redirect requests to the final downstreams)
+3.2 Returns 302 with a redirect to the initial request 
+4. Request the Gateway again, and now logged in, access successfully the resource
+
+<img src="./images/authentication.png" />
 
 ---
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/groot-mg/docs/blob/main/LICENSE)
