@@ -66,11 +66,42 @@ What each repository does:
 * `basket-service`: manages the client basket
 * `notification-service`: kafka consumer for notifications, but this has no implementation
 
-# Features
+# Requirements / Features
 
-## Identity
+## High Level
 
-Technical detail on how the keycloak works with Spring for Oauth2.
+The project is an simple e-commerce that manages products and allow customers to buy them. It provides a whole monitoring architecture with Prometheus, Grafana dashboards and logging tracing, also including an alerting system with alert-manager integrated with Slack. 
+
+In deep details are provided on the next topics, but a summary on the main features are:
+* Sale and customer users are allowed, some features on the application are limited to specific users
+* Sale users will register, update, delete, active or deactivate products
+* Customers are able to retrieve all the active products and buy them
+* Validations are included during product registration, update, delete, on user interation with basket
+* A reservation system is implemented to avoid 2 different customers to buy the last product in stock
+* On checkout, Kafka messages are created to notify the seller, the customer, and to create a tracking record to delivery the order, but there is no implementation on those features besides reading and logging the message
+
+### What is not included on this project
+This is not intended to be a complex or a full e-commerce implementation, so the features below are not included:
+* Sending real e-mail/SMS or other type of notifications
+    * `notification` repository contains a kafka consumer to consume notifications (kafka message) but it just logs on the console and does not have much implementation
+* Tracking system (Delivery)
+    * `notification` repository contains a kafka consumer to consume messages when the user checks out a basket, but there is not tracking system implementation for the delivery (shipping, dispatched, delivered, etc), it just logs on the console
+* Discount cupom or promotions, or delivery calculation
+    * Discounts, promotions or delivery calculation are not included on this project during check out
+* Multiple currencies (Dolar, Euro, Real, etc)
+    * There is no support for multiple currencies
+* Multi language
+    * product names or desriptions could have support for more than one language, but it is not set on this project
+* Payments
+    * This project does not implement any payment flow
+
+## Users
+Users will have 2 different roles: 
+
+- `Sale`: user that is able to register products and see its sales
+- `Client`: user that is able to purchase products 
+
+`p.s`: The users are created directly on keycloak.
 
 ### Login with Keycloak
 
