@@ -129,6 +129,7 @@ For Authentication and Authorization, an Spring OAuth2 is used with Keycloak. Th
     * another flag 'is_sold' will be set to true is a sale is finished with the product, after this, it will be disallowed to be deleted forever (in a real scenario the product would be in the invoice)
 * Any product are allowed to be deactivated
 * Clients are allowed to list all active products
+* When the stock is low or sold out, a notification should be sent to the seller
 
 ### Endpoints:
 * Add product (POST /products)
