@@ -23,8 +23,10 @@ This is a check list for the spring applications on this project
 - [ ] Update Insomnia with requests and environment variable (https://github.com/groot-mg/insomnia-requests)
 - [ ] (Optional) Set up Eureka client
 - [ ] (Optional) Set up security (Oauth2 integration with Keycloak)
-- [ ] Update prometheus to scrape from the new app (https://github.com/groot-mg/observability-tools)
-- [ ] Include the new app in the Grafana health dashboards
 - [ ] Set up Github Actions
    - [ ] Build and tests
    - [ ] Sonar Analyses
+- [ ] Update prometheus to scrape from the new app (https://github.com/groot-mg/observability-tools)
+- [ ] Add application on the local setup (https://github.com/groot-mg/docker-local-setup)
+- [ ] Include the new app in the Grafana health dashboards
+- [ ] Set up the app on API Gateway to forward requests (https://github.com/groot-mg/gateway)
