@@ -62,8 +62,10 @@ What each repository does:
 * `identity-service`: contains keycloak config (and an application that is not used in the project, but can be used to login and create new users)
     * Repository: [identity-service](https://github.com/groot-mg/identity-service)
     * Wiki: [here](https://github.com/groot-mg/identity-service/wiki)
-* `sales-catalog-service`: manages products and stock
-* `basket-service`: manages the client basket
+* `sales-catalog`: manage products and stock
+    * Repository: [sales-catalog](https://github.com/groot-mg/sales-catalog)
+* `basket-service`: manage the client basket
+    * Repository: [basket-service](https://github.com/groot-mg/basket-service)
 * `notification-service`: kafka consumer for notifications, but this has no implementation
 
 # Requirements / Features
