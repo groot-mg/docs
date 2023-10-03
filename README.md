@@ -8,6 +8,7 @@
 </p>
 
 ---
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/groot-mg/docs/blob/main/LICENSE)
 
 ## Draw.io
 [draw.io](http://draw.io/) is used for the designs.
@@ -119,5 +120,111 @@ For Authentication and Authorization, an Spring OAuth2 is used with Keycloak. Th
 
 <img src="./images/authentication.png" />
 
----
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/groot-mg/docs/blob/main/LICENSE)
+## Sales catalog
+
+* A sales user register/update/delete products
+* Products in basket or purchased are not allowed to be deleted
+    * a field on database `reserved` will increment when a product is reserved in basket
+    * if the product is removed from all basked it will be back to `0` and allowed to be deleted
+    * another flag 'is_sold' will be set to true is a sale is finished with the product, after this, it will be disallowed to be deleted forever (in a real scenario the product would be in the invoice)
+* Any product are allowed to be deactivated
+* Clients are allowed to list all active products
+
+### Endpoints:
+* Add product (POST /products)
+    * Role: sale
+    * Validations: 
+        * name duplication
+        * price should be positive
+        * quantity should be zero or positive
+* Update product (PATCH /product/{product_id})
+    * Role: sale
+    * same validations as to add product
+    * Increment stock or decrement stock
+* Delete product (DELETE /products/{product_id})
+    * Validations:
+        * products in basket are not allowed to be deleted
+        * products purchased are not allowed to be deleted
+* Disable product (PUT /products/{product_id}/activate, PUT /products/{product_id}/deactivate)
+* List products (GET /products)
+    * If sales user - list all owned products
+        * Does not list products from other users
+    * If client, list all active products in stock
+* Get specific product (GET /products/{product_id})
+    * Same validation on the user type as to return all products
+* GET products by ids (GET /products?ids={ids})
+    * This will be used by basket service to verify if products exist in a single call
+    * The response when a product does not exist will be an error with details on body
+
+Database: PostgreSQL
+
+* product:
+    * product_id
+    * name
+    * description
+    * price
+    * quantity
+    * reserved
+    * is_sold
+    * user_id (sale user)
+
+## Basket service
+
+* Only client users are allowed to interact with basket endpoints
+* When a product has its price changed and a product is already on the basket, the previous price will be still used
+* A basket will have 15 minutes life (in a real project it would be longer)
+    * When a basket is created, a Kafka message should be created to be triggered 15 minutes later
+    * A consumer job will check the basket status, and if it is not closed, it should expire the basket and remove the product as reserved
+
+Endpoints:
+* Create basket (POST /baskets)
+    * Validations
+        * Check if user has already an open basket
+        * Should have at least one product
+        * Check if products exist on `sales_catalog`
+        * Call `sales_catalog` to reserve the product
+    * Create a kafka message for basket expiration in 15 minutes
+* Add product to the basket (POST /baskets/{basket_id}/products)
+    * Allow maximun 10 products in the basket
+    * Call `sales_catalog` and check if product exist
+    * Call `sales_catalog` to reserve the product
+* Update product quantity (PUT /baskets/{basket_id}/products/{products_id})
+    * Check `sales_catalog` if the product exist
+    * Reserve product on `sales_catalog`
+    * If the update set it to 0, remove the product from the basket
+    * Basket should have at least 1 product, so need validation
+* Delete product from basket (DELETE /baskets/{basket_id}/products/{product_id})
+    * Basket should have at least one product
+* List all baskets (GET /baskets)
+* List by id (GET /baskets/{basket_id})
+* Checkout (POST /baskets/{basket_id}/checkout)
+    * call `sales_catalog` and update stock/reserved product
+    * update basket status to CLOSED
+    * create kafka messages for:
+        * user notification - sale completed
+        * notification for each sale user about the product(s) sold
+
+* Kafka consumer
+    * Consumer message for basket expiration
+    * If basket is not CLOSED, update status to EXPIRED
+        * Calls `sales_catalog` and put he product in the stock again
+
+Database: PostgreSQL
+
+* basket:
+    * basket_id
+    * user_id (client user)
+    * total_preview
+    * status (active, closed, expired)
+
+* basket_items:
+    * basket_id
+    * product_id
+    * product_price
+
+## Notification service
+
+* Notification service will have the default `/info`, `/health` and `/metrics` endpoints from actuator
+* It is a kafka listener
+* A message will be listened when a customer closes a basket
+* A notification should be sent (fake) to the customer and to the seler
