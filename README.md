@@ -19,7 +19,7 @@ Files are available under the folder [/draw.io](./draw.io/).
 
 [PlantText](https://www.planttext.com/) is used for the sequence diagrams.
 
-Files are available under the folder [/plant-text](https://www.planttext.com/).
+Files are available under the folder [/plant-text](./plant-text/).
 
 # Application architecture/design
 
@@ -56,6 +56,8 @@ What each repository does:
     * Repository: [observability-tools](https://github.com/groot-mg/observability-tools)
 * `local-database-config`: contains centralised config for database
     * Repository: [local-database-config](https://github.com/groot-mg/local-database-config)
+* `local-kafka-config`: contains centralised config for kafka
+    * Repository: [local-kafka-config](https://github.com/groot-mg/local-kafka-config)
 * `service-discovery`: service discovery app (Netflix eureka)
     * Repository: [service-discovery](https://github.com/groot-mg/service-discovery)
 * `gateway`: gateway app, the application entrypoint. 
@@ -68,6 +70,7 @@ What each repository does:
 * `basket-service`: manage the client basket
     * Repository: [basket-service](https://github.com/groot-mg/basket-service)
 * `notification-service`: kafka consumer for notifications, but this has no implementation
+    * Repository: [notification-service](https://github.com/groot-mg/notification-service)
 
 # Requirements / Features
 
