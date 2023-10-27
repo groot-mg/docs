@@ -123,7 +123,13 @@ For Authentication and Authorization, an Spring OAuth2 is used with Keycloak. Th
 
 <img src="./images/authentication.png" />
 
-## Sales catalog
+## Services
+
+The diagram above is high level about the features and the communications between the services:
+
+<img src="./images/services.png" />
+
+### Sales catalog
 
 * A sales user register/update/delete products
 * Products in basket or purchased are not allowed to be deleted
@@ -134,7 +140,7 @@ For Authentication and Authorization, an Spring OAuth2 is used with Keycloak. Th
 * Clients are allowed to list all active products
 * When the stock is low or sold out, a notification should be sent to the seller
 
-### Endpoints:
+#### Endpoints:
 * Add product (POST /products)
     * Role: sale
     * Validations: 
@@ -172,7 +178,7 @@ Database: PostgreSQL
     * is_sold
     * user_id (sale user)
 
-## Basket service
+### Basket service
 
 * Only client users are allowed to interact with basket endpoints
 * When a product has its price changed and a product is already on the basket, the previous price will be still used
@@ -226,7 +232,7 @@ Database: PostgreSQL
     * product_id
     * product_price
 
-## Notification service
+### Notification service
 
 * Notification service will have the default `/info`, `/health` and `/metrics` endpoints from actuator
 * It is a kafka listener
